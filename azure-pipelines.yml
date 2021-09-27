@@ -1,6 +1,7 @@
 name : Docker-CI
 
 
+
 trigger:
   branches:
     include:
@@ -34,6 +35,13 @@ stages:
       inputs:
        testResultsFormat: 'JUnit'
        testResultsFiles: '**/TEST-*.xml' 
+       
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
+
     - task: Docker@1
       displayName: 'Push the Docker image to Dockerhub'
       inputs:

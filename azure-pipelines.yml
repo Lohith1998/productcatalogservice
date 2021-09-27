@@ -1,4 +1,6 @@
 name : Docker-CI
+
+
 trigger:
   branches:
     include:
@@ -28,7 +30,10 @@ stages:
         includeLatestTag: true
         useDefaultContext: false
         buildContext: '.'
-     
+    - task: PublishTestResults@2
+      inputs:
+       testResultsFormat: 'JUnit'
+       testResultsFiles: '**/TEST-*.xml' 
     - task: Docker@1
       displayName: 'Push the Docker image to Dockerhub'
       inputs:
